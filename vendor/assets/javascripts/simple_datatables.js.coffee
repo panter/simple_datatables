@@ -42,7 +42,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each(aoData, (index, dataObj) -> 
     search_regexp = ///sSearch_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      data.push({name: "search["+columns[col[1]]+"_sw"+"]", value: dataObj.value});
+      data.push({name: "search["+columns[col[1]]+"_contains"+"]", value: dataObj.value});
 
     search_regexp = ///bSearchable_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
@@ -70,7 +70,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
     if bRegex
       op = "_contains" 
     else 
-      op = "_sw"
+      op = "_contains"
     data.push({name: "search["+searchcolumns.join("_or_")+op+"]", value: sSearch});
 
   $.ajax( { "dataType": 'json', "type": "GET", "url": sSource, "data": data, "success": fnCallback } );

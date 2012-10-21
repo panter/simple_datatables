@@ -2,6 +2,10 @@
 
 Connects two awesome plugins - Datatables for Jquery and Meta Search together for Rails 3
 
+== Fork
+
+This fork alters the way filtering is done. For this push, it just replaces the _sw meta_where suffix with _contains.
+
 == Install
 
 Add the following to your Gemfile to install simple datatables:
