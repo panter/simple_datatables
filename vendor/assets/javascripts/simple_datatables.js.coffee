@@ -15,7 +15,6 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   iDisplayLength = 0;
   data = [];
   data_types = ["integer" , "date" , "date", "string" , "nil"]
-  suffixes = {'integer': '_eq', 'string': '_contains'}
 
   $.each(aoData, (index, dataObj) -> 
     switch dataObj.name
