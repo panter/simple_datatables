@@ -15,6 +15,8 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   iDisplayStart = 0;
   iDisplayLength = 0;
   data = [];
+  data_types = $('table.datatable thead th.header').map((index, obj) -> { return $(obj).attr('data-type') })
+  suffixes = {'integer': '_eq', 'string': '_contains'}
 
   $.each(aoData, (index, dataObj) -> 
     switch dataObj.name
@@ -42,7 +44,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each(aoData, (index, dataObj) -> 
     search_regexp = ///sSearch_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      data.push({name: "search["+columns[col[1]]+"_contains"+"]", value: dataObj.value});
+      data.push({name: "search["+columns[col[1]]+suffixes[data_types[col[1]]]+"]", value: dataObj.value});
 
     search_regexp = ///bSearchable_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
