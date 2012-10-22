@@ -4,7 +4,6 @@
 root = exports ? this
   
 root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
-      
   columns = [];
   searchcolumns = [];
   sortcolumns = [];
@@ -15,7 +14,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   iDisplayStart = 0;
   iDisplayLength = 0;
   data = [];
-  data_types = $('table.datatable thead th.header').map((index, obj) -> { return $(obj).attr('data-type') })
+  data_types = ["integer" , "date" , "date", "string" , "nil"]
   suffixes = {'integer': '_eq', 'string': '_contains'}
 
   $.each(aoData, (index, dataObj) -> 
@@ -41,15 +40,15 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
         console.log(dataObj.name);
   );
 
+  # Using the HTML5 data attributes to create the meta_where filtering attributes.
+  $.each($('table.datatable thead th input'), (index, field) ->
+    if $(field).val() != ''
+      data.push({name: "search[" + $(field).attr('data-meta-where') + "]", value: $(field).val()})
+    if $(field).attr('data-meta-where').match(/_contains$/)
+      searchcolumns.push($(field).attr('data-meta-where').replace(/_contains$/, ''))
+  )
+
   $.each(aoData, (index, dataObj) -> 
-    search_regexp = ///sSearch_([0-9]+)///
-    if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      data.push({name: "search["+columns[col[1]]+suffixes[data_types[col[1]]]+"]", value: dataObj.value});
-
-    search_regexp = ///bSearchable_([0-9]+)///
-    if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      searchcolumns.push(columns[col[1]]);
-
     search_regexp = ///iSortCol_([0-9]+)///
     if (col = dataObj.name.match(search_regexp))
       sortcolumns[parseInt(col[1])]=columns[parseInt(dataObj.value)];
@@ -76,4 +75,3 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
     data.push({name: "search["+searchcolumns.join("_or_")+op+"]", value: sSearch});
 
   $.ajax( { "dataType": 'json', "type": "GET", "url": sSource, "data": data, "success": fnCallback } );
-  
