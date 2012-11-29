@@ -73,4 +73,13 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
       op = "_contains"
     data.push({name: "search["+searchcolumns.join("_or_")+op+"]", value: sSearch});
 
-  $.ajax( { "dataType": 'json', "type": "GET", "url": sSource, "data": data, "success": fnCallback } );
+  $.ajax({
+    "dataType": 'json', 
+    "type": "GET", 
+    "url": sSource, 
+    "data": data, 
+    "success": (data, textStatus, jqXHR) -> 
+      fnCallback(data, textStatus, jqXHR); 
+      if (typeof(dataSummary) == typeof(Function)) 
+        dataSummary()
+  });
