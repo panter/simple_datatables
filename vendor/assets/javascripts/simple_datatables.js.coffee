@@ -40,7 +40,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   );
 
   # Using the HTML5 data attributes to create the meta_where filtering attributes.
-  $.each($('table.datatable thead th input'), (index, field) ->
+  $.each($('table.datatable thead th input, table.datatable thead th button.active[value!="all"]'), (index, field) ->
     if $(field).val() != ''
       data.push({name: "search[" + $(field).attr('data-meta-where') + "]", value: $(field).val()})
     if $(field).attr('data-meta-where').match(/_contains$/)
