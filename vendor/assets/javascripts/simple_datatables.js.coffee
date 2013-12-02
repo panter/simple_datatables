@@ -54,13 +54,13 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
 
     search_regexp = ///sSortDir_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      sortcolumns[col[1]]=sortcolumns[col[1]]+"."+dataObj.value
+      sortcolumns[col[1]]=sortcolumns[col[1]]+" "+dataObj.value
   )
 
   data.push({name: "sEcho", value: sEcho})
   data.push({name: "page", value: iDisplayStart/iDisplayLength + 1})
   data.push({name: "per_page", value: iDisplayLength})
-  data.push({name: "search[meta_sort]", value: sortcolumns[0]})
+  data.push({name: "search[s]", value: sortcolumns[0]})
 
   $.each(columns, (index, val) ->
     data.push({name: "columns["+index+"]", value: val})
