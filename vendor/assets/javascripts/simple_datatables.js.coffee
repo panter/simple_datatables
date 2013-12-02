@@ -43,8 +43,8 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each($('table.datatable thead th input, table.datatable thead th button.active[value!="all"]'), (index, field) ->
     if $(field).val() != ''
       data.push({name: "search[" + $(field).attr('data-meta-where') + "]", value: $(field).val()})
-    if $(field).attr('data-meta-where').match(/_contains$/)
-      searchcolumns.push($(field).attr('data-meta-where').replace(/_contains$/, ''))
+    if $(field).attr('data-meta-where').match(/_cont$/)
+      searchcolumns.push($(field).attr('data-meta-where').replace(/_cont$/, ''))
   )
 
   $.each(aoData, (index, dataObj) ->
@@ -68,9 +68,9 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   
   if sSearch
     if bRegex
-      op = "_contains"
+      op = "_cont"
     else
-      op = "_contains"
+      op = "_cont"
     data.push({name: "search["+searchcolumns.join("_or_")+op+"]", value: sSearch})
 
   $.ajax({
